@@ -337,9 +337,9 @@ public class UnitTestRunner {
                return total;
             }
          
-            // TODO: catch Throwable or something that catches StackOverflow
-            // TODO: Assure that all exceptions are properly caught
-            // TODO: Default to stopping at first failure!
+            // todo: catch Throwable or something that catches StackOverflow
+            // todo: Assure that all exceptions are properly caught
+            // todo: Default to stopping at first failure!
          } catch (StackOverflowError e) {
             System.out.println(" Failed with Stack Overflow.");
             if (breakOnFail) {
