@@ -104,8 +104,12 @@ public class FracCalc {
          resultNumerator = improperFraction1 * improperFraction2;
          resultDenominator = denominator1 * denominator2;
       } else if(op.equals("/")) {
-         resultNumerator = improperFraction1 * denominator2;
-         resultDenominator = improperFraction2 * denominator1;
+         if (improperFraction2 == 0 || denominator2 == 0) {
+            throw new ArithmeticException("Division by zero is not allowed.");
+         } else {
+            resultNumerator = improperFraction1 * denominator2;
+            resultDenominator = improperFraction2 * denominator1;
+         }
       }
 
       // Reduce the fraction using greatest common divisor
@@ -240,8 +244,8 @@ public class FracCalc {
    public static String provideHelp() {
       // todo: Update this help text!
 
-      String help = "Type in two numbers with an arithmetic operator like (+, -, /, *)\n ";
-      help += "The program will output will answer with a reduced (mixed) fraction. ";
+      String help = "Type in two numbers with an arithmetic operator like (+, -, /, *)\n";
+      help += "Make sure to use spaces between the numbers and the operator.";
 
       return help;
    }
