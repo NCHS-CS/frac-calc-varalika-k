@@ -74,38 +74,43 @@ public class FracCalc {
    // including two fractions and an operator.
    // The parameter input a string containg a fraction expression.
    // It will return the result of the expression as a String.
-   
-   public static String processExpression(String input) {
-      String left = getLeftOperand(input); 
-      String right = getRightOperand(input);
-      String op = getOperator(input); 
 
-      int whole1 = extractWhole(left); 
-      int numerator1 = extractNumerator(left); 
-      int denominator1 = extractDenominator(left); 
+   public static String processExpression(String input) {
+      String left = getLeftOperand(input);
+      String right = getRightOperand(input);
+      String op = getOperator(input);
+
+      int whole1 = extractWhole(left);
+      int numerator1 = extractNumerator(left);
+      int denominator1 = extractDenominator(left);
+      if (denominator1 ==0) {
+         return "Error: Division by zero is not allowed.";
+      }
 
       int whole2 = extractWhole(right);
-      int numerator2 = extractNumerator(right); 
-      int denominator2 = extractDenominator(right); 
+      int numerator2 = extractNumerator(right);
+      int denominator2 = extractDenominator(right);
+      if (denominator2 == 0) {
+         return "Error: Division by zero is not allowed.";
+      }
 
-      int improperFraction1 = convertToImproperNumerator(whole1, numerator1, denominator1); // improper fraction of left operhand
-      int improperFraction2 = convertToImproperNumerator(whole2, numerator2, denominator2); // improper fraction of right operhandquit
+      int improperFraction1 = convertToImproperNumerator(whole1, numerator1, denominator1); 
+      int improperFraction2 = convertToImproperNumerator(whole2, numerator2, denominator2);
+      int resultNumerator = 0; 
+      int resultDenominator = 1; 
 
-      int resultNumerator = 0; // numerator of the result
-      int resultDenominator = 1; // denominator of the result
-
-      if(op.equals("+")) {
+      if (op.equals("+")) {
          resultNumerator = improperFraction1 * denominator2 + improperFraction2 * denominator1;
          resultDenominator = denominator1 * denominator2;
-      } else if(op.equals("-")) {
+      } else if (op.equals("-")) {
          resultNumerator = improperFraction1 * denominator2 - improperFraction2 * denominator1;
          resultDenominator = denominator1 * denominator2;
-      } else if(op.equals("*")) {
+      } else if (op.equals("*")) {
          resultNumerator = improperFraction1 * improperFraction2;
          resultDenominator = denominator1 * denominator2;
-      } else if(op.equals("/")) {
+      } else if (op.equals("/")) {
          if (improperFraction2 == 0 || denominator2 == 0) {
-            throw new ArithmeticException("Division by zero is not allowed.");
+            return "Error: Division by zero is not allowed.";
          } else {
             resultNumerator = improperFraction1 * denominator2;
             resultDenominator = improperFraction2 * denominator1;
@@ -113,14 +118,14 @@ public class FracCalc {
       }
 
       // Reduce the fraction using greatest common divisor
-      int gcd = getGCD(Math.abs(resultNumerator), Math.abs(resultDenominator)); // greatest common divisor of numerator and denominator
-      resultNumerator /= gcd; 
+      int gcd = getGCD(Math.abs(resultNumerator), Math.abs(resultDenominator)); 
+      resultNumerator /= gcd;
       resultDenominator /= gcd;
-      if (resultDenominator < 0) { 
-         // Checks if the denominator is positive. 
-         resultDenominator *= -1; 
-         resultNumerator *= -1; 
-         
+      if (resultDenominator < 0) {
+         // Checks if the denominator is positive.
+         resultDenominator *= -1;
+         resultNumerator *= -1;
+
       }
       return formatAnswer(resultNumerator, resultDenominator); // format and return the answer
    }
@@ -129,7 +134,7 @@ public class FracCalc {
    // and extract the left operhand, right operhand, and operator.
 
    // Extracts and returns the left operand from an experssion.
-   // The parameter inputs the full expession. 
+   // The parameter inputs the full expession.
    // It returns the left operand.
    public static String getLeftOperand(String input) {
       int space = input.indexOf(" ");
@@ -137,7 +142,7 @@ public class FracCalc {
    }
 
    // Extracts and returns the right operand from an experssion.
-   // The parameter inputs the full expession. 
+   // The parameter inputs the full expession.
    // It returns the right operand.
    public static String getRightOperand(String input) {
       int space = input.lastIndexOf(" ");
@@ -145,14 +150,14 @@ public class FracCalc {
    }
 
    // Extracts and returns the operator from an expression.
-   // The parameter inputs the full expression. 
+   // The parameter inputs the full expression.
    // It returns the operator.
    public static String getOperator(String input) {
       int first = input.indexOf(" ");
       int second = input.indexOf(" ", first + 1);
       return input.substring(first + 1, second);
    }
-   
+
    // Coverts a mixed number into an improper fraction.
    // Returns the whole number portion of an operand.
    // The parameter is the operhand which holds the mixed number.
@@ -203,7 +208,7 @@ public class FracCalc {
       return whole * denominator + numerator;
    }
 
-   // This method is useful for reducing fractions to their simplest form. 
+   // This method is useful for reducing fractions to their simplest form.
    // Parameter a is the first integeter.
    // Parameter b is the second integer.
    // This returns the greatest common divisor of a and b.
@@ -225,7 +230,7 @@ public class FracCalc {
          return "0";
       }
       int whole = numerator / denominator;
-      int remainder = Math.abs(numerator % denominator); 
+      int remainder = Math.abs(numerator % denominator);
       if (remainder == 0) {
          return "" + whole;
       }
